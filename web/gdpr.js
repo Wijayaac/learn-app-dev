@@ -1,16 +1,18 @@
 import { DeliveryMethod } from "@shopify/shopify-api";
 
+import shopify from "./shopify.js";
+
 export default {
   /**
    * Customers can request their data from a store owner. When this happens,
    * Shopify invokes this webhook.
    *
-   * https://shopify.dev/docs/apps/webhooks/configuration/mandatory-webhooks#customers-data_request
+   * https://shopify.dev/apps/webhooks/configuration/mandatory-webhooks#customers-data_request
    */
   CUSTOMERS_DATA_REQUEST: {
     deliveryMethod: DeliveryMethod.Http,
-    callbackUrl: "/api/webhooks",
-    callback: async (topic, shop, body, webhookId) => {
+    callbackUrl: shopify.config.webhooks.path,
+    callback: async (topic, shop, body) => {
       const payload = JSON.parse(body);
       // Payload has the following shape:
       // {
@@ -37,12 +39,12 @@ export default {
    * Store owners can request that data is deleted on behalf of a customer. When
    * this happens, Shopify invokes this webhook.
    *
-   * https://shopify.dev/docs/apps/webhooks/configuration/mandatory-webhooks#customers-redact
+   * https://shopify.dev/apps/webhooks/configuration/mandatory-webhooks#customers-redact
    */
   CUSTOMERS_REDACT: {
     deliveryMethod: DeliveryMethod.Http,
-    callbackUrl: "/api/webhooks",
-    callback: async (topic, shop, body, webhookId) => {
+    callbackUrl: shopify.config.webhooks.path,
+    callback: async (topic, shop, body) => {
       const payload = JSON.parse(body);
       // Payload has the following shape:
       // {
@@ -66,12 +68,12 @@ export default {
    * 48 hours after a store owner uninstalls your app, Shopify invokes this
    * webhook.
    *
-   * https://shopify.dev/docs/apps/webhooks/configuration/mandatory-webhooks#shop-redact
+   * https://shopify.dev/apps/webhooks/configuration/mandatory-webhooks#shop-redact
    */
   SHOP_REDACT: {
     deliveryMethod: DeliveryMethod.Http,
-    callbackUrl: "/api/webhooks",
-    callback: async (topic, shop, body, webhookId) => {
+    callbackUrl: shopify.config.webhooks.path,
+    callback: async (topic, shop, body) => {
       const payload = JSON.parse(body);
       // Payload has the following shape:
       // {

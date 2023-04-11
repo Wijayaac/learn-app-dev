@@ -9,6 +9,7 @@ export default function NotFound() {
           <EmptyState
             heading="There is no page at this address"
             image={notFoundImage}
+            fullWidth
           >
             <p>
               Check the URL and try again, or use the search bar to find what
